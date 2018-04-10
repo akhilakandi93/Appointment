@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Schedule Appointment
+</title>
+<head>
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="C:\Users\I324715\Desktop\style.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.8.23/themes/redmond/jquery-ui.css">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+
+<script>
+$(function() {
+
+function sendObject(){
+	
+	$.ajax({
+		type : 'GET',
+		url : loginURL,
+		contentType : 'application/json',
+		data : JSON.stringify(tmp),
+		success : function() {
+			
+		},
+		error : function(err) {
+			alert("Please enter Valid credentials.")
+			console.log("Error: "+err)
+		}
+	})
+}
+});
+</script>
+<body>
+<br>
+&emsp;<img src="C:\Users\I324715\Downloads\logo" width="300" height="44"/>
+<ul>
+<li> </li>
+<br>
+</ul>
+<br style="line-height:3;">
+<center>
+<h3 style="text-shadow: 1px 1px 2px pink;"> Careplan Notification Simulator</h3> 
+<h4> <label id="careplan" style="font-family: 'Roboto', sans-serif;">Sprained Ankle </label></label><label style="font-family: 'Roboto', sans-serif;">- Care Plan</h4>
+<div class="outbox">
+<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+<tr>
+	<td>
+	Choose Physician Name&emsp;
+	</td><td><input type="text" id="phyName" required bgcolor="#d9d9d9" placeholder="Enter Physician Name" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+<tr><td>Choose Location&emsp;</td><td><input type="text" id="loc" required bgcolor="#d9d9d9" placeholder="Enter Location" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+   <tr><td>Schedule Appointment&emsp;</td><td><input type="datetime-local" id="time" required bgcolor="#d9d9d9" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+   </table>
+   <br>
+<input type="button" value="Confirm Appointment" id="xraySwitch" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#0086b3;border-radius: 8px;">
+</div>
+</center>
+</body>
+</html>
