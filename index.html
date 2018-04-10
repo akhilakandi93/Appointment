@@ -19,21 +19,19 @@
 $(function(){
 var URL = "https://qj45krhaa7.execute-api.us-east-1.amazonaws.com/deployApp/notify"
 var param;
-var temp;
+var temp,tmp;
 var searchParams = new URLSearchParams(window.location.search)
-
+var ntfid,event;
 if(searchParams.has('ntfId')){
-	param = searchParams.get('ntfId');
-	temp = {
-		cpId : param
-	}
+	ntdif = searchParams.get('ntfId');
 }
 if(searchParams.has('task')){
 	param = searchParams.get('task');
-	var tmp = {
-		task : param
+	tmp = {
+		activity: {
+			headline : param
+		}
 	}
-	$.extend(temp,tmp);
 }
 if(param == 'XrayAppointment') document.getElementById('xray').style.display = "block";
 if(param == 'AppliedIce') document.getElementById('ice').style.display = "block";
@@ -41,47 +39,48 @@ if(param == 'OrthoSpecialistAppointment') document.getElementById('ortho').style
 if(param == 'MedicationReminder') document.getElementById('med').style.display = "block";
 if(param == 'WalkNotification') document.getElementById('walk').style.display = "block";
 if(param == 'EvaluateMobility') document.getElementById('mob').style.display = "block";
-
+var activity;
   $("#switch1").click(function(){
 	var msg= "";
 	if(param == 'XrayAppointment' || param == 'OrthoSpecialistAppointment'){
+	  
 	  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
 	  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
 	  if($('#time').val() == "") msg= msg+"Please choose date and time for your appointment.\n";
 	  if(msg != ""){
 		  alert(msg)
 	   }else{
-		temp['physicianName'] = $('#phyName').val();
-		temp['location'] = $('#loc').val();
-		temp['start'] = $('#loc').val();
+	    tmp.activity['physicianName'] = $('#phyName').val();
+		tmp.activity['location'] = $('#loc').val();
+		tmp.activity['start'] = $('#time').val();
 		sendObject();
 		alert("You have successfully scheduled your appointment. See you then!")
        }
 	}else if(param == 'AppliedIce') {
 		if($('#iceNotification').val() == " ") alert("Please select if you applied Ice pack or not.");
 		else {
-			temp['appliedIce'] = $('#iceNotification').val()
+			tmp.activity['appliedIce'] = $('#iceNotification').val()
 			alert("User response: "+$('#iceNotification').val()+".Submitted successfully.");
 			sendObject();
 		}
 	}else if(param == 'MedicationReminder') {
 		if($('#medicationAlert').val() == " ") alert("Please select how frequently you want to be reminded.");
 		else {
-			temp['scheduledTime'] = $('#medicationAlert').val();
+			tmp.actvity['scheduledTime'] = $('#medicationAlert').val();
 			alert("User response: "+$('#medicationAlert').val()+".Submitted successfully.");
 			sendObject();
 		}
 	}else if(param == 'WalkNotification'){
 		if($('#walkNotification').val() == " ") alert("Please choose if you want to set reminders for Walk Notification.")
 		else{
-			temp['userResponse'] = $('#walkNotification').val();
+			tmp.activity['userResponse'] = $('#walkNotification').val();
 			alert("User response: "+$('#walkNotification').val()+".Submitted successfully.");
 			sendObject();
 		}
 	}else if(param == 'EvaluateMobility'){
 		if($('#mobility').val() == "") alert("Please evaluate your Mobility on a scale of 1-10.")
 		else{
-			temp['mobility'] = $('#mobility').val();
+			tmp['mobility'] = $('#mobility').val();
 			alert("User response: "+$('#mobility').val()+".Submitted successfully.");
 			sendObject();
 		}
@@ -93,7 +92,7 @@ function sendObject(){
 		type : 'POST',
 		url : URL,
 		contentType : 'application/json',
-		data : JSON.stringify(temp),
+		data : JSON.stringify(tmp),
 		success : function() {
 		},
 		error : function(err) {
