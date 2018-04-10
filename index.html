@@ -16,8 +16,9 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-
+var URL = "https://qj45krhaa7.execute-api.us-east-1.amazonaws.com/deployApp/notify"
 $(document).ready(function(){
+let searchParams = new URLSearchParams(window.location.search)
   $("#switch1").click(function(){
 	  var msg= "";
 	  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
@@ -29,14 +30,23 @@ $(document).ready(function(){
 		  sendObject();
            }
 });
-				  
+var param;
+var temp;
+if(searchParams.has('cpId')){
+	param = searchParams.get('cpId');
+	temp = {
+		cpId : param
+	}
+}
 function sendObject(){
-	
+	temp['physicianName'] = $('#phyName').val();
+	temp['location'] = $('#loc').val();
+	temp['start'] = $('#loc').val();
 	$.ajax({
 		type : 'POST',
-		url : loginURL,
+		url : URL,
 		contentType : 'application/json',
-		data : JSON.stringify(tmp),
+		data : JSON.stringify(temp),
 		success : function() {
 			
 		},
