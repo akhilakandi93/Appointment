@@ -16,40 +16,85 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script type="text/javascript">
+$(function(){
 var URL = "https://qj45krhaa7.execute-api.us-east-1.amazonaws.com/deployApp/notify"
-$(document).ready(function(){
-let searchParams = new URLSearchParams(window.location.search)
+var param;
+var temp;
+var searchParams = new URLSearchParams(window.location.search)
+
+if(searchParams.has('ntfId')){
+	param = searchParams.get('ntfId');
+	temp = {
+		cpId : param
+	}
+}
+if(searchParams.has('task')){
+	param = searchParams.get('task');
+	var tmp = {
+		task : param
+	}
+	$.extend(temp,tmp);
+}
+if(param == 'XrayAppointment') document.getElementById('xray').style.display = "block";
+if(param == 'AppliedIce') document.getElementById('ice').style.display = "block";
+if(param == 'OrthoSpecialistAppointment') document.getElementById('ortho').style.display = "block";
+if(param == 'MedicationReminder') document.getElementById('med').style.display = "block";
+if(param == 'WalkNotification') document.getElementById('walk').style.display = "block";
+if(param == 'EvaluateMobility') document.getElementById('mob').style.display = "block";
+
   $("#switch1").click(function(){
-	  var msg= "";
+	var msg= "";
+	if(param == 'XrayAppointment' || param == 'OrthoSpecialistAppointment'){
 	  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
 	  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
 	  if($('#time').val() == "") msg= msg+"Please choose date and time for your appointment.\n";
 	  if(msg != ""){
 		  alert(msg)
 	   }else{
-		  sendObject();
-		   alert("You have successfully scheduled your appointment. See you then!")
-           }
-});
-var param;
-var temp;
-if(searchParams.has('cpId')){
-	param = searchParams.get('cpId');
-	temp = {
-		cpId : param
+		temp['physicianName'] = $('#phyName').val();
+		temp['location'] = $('#loc').val();
+		temp['start'] = $('#loc').val();
+		sendObject();
+		alert("You have successfully scheduled your appointment. See you then!")
+       }
+	}else if(param == 'AppliedIce') {
+		if($('#iceNotification').val() == " ") alert("Please select if you applied Ice pack or not.");
+		else {
+			temp['appliedIce'] = $('#iceNotification').val()
+			alert("User response: "+$('#iceNotification').val()+".Submitted successfully.");
+			sendObject();
+		}
+	}else if(param == 'MedicationReminder') {
+		if($('#medicationAlert').val() == " ") alert("Please select how frequently you want to be reminded.");
+		else {
+			temp['scheduledTime'] = $('#medicationAlert').val();
+			alert("User response: "+$('#medicationAlert').val()+".Submitted successfully.");
+			sendObject();
+		}
+	}else if(param == 'WalkNotification'){
+		if($('#walkNotification').val() == " ") alert("Please choose if you want to set reminders for Walk Notification.")
+		else{
+			temp['userResponse'] = $('#walkNotification').val();
+			alert("User response: "+$('#walkNotification').val()+".Submitted successfully.");
+			sendObject();
+		}
+	}else if(param == 'EvaluateMobility'){
+		if($('#mobility').val() == "") alert("Please evaluate your Mobility on a scale of 1-10.")
+		else{
+			temp['mobility'] = $('#mobility').val();
+			alert("User response: "+$('#mobility').val()+".Submitted successfully.");
+			sendObject();
+		}
 	}
-}
+});
+
 function sendObject(){
-	temp['physicianName'] = $('#phyName').val();
-	temp['location'] = $('#loc').val();
-	temp['start'] = $('#loc').val();
 	$.ajax({
 		type : 'POST',
 		url : URL,
 		contentType : 'application/json',
 		data : JSON.stringify(temp),
 		success : function() {
-			
 		},
 		error : function(err) {
 			console.log("Error: "+err)
@@ -57,8 +102,6 @@ function sendObject(){
 	})
 }
 });
-
-
 </script>
 <body>
 <br>
@@ -72,6 +115,8 @@ function sendObject(){
 <h3 style="text-shadow: 1px 1px 2px pink;"> Careplan Notification Simulator</h3> 
 <h4> <label id="careplan" style="font-family: 'Roboto', sans-serif;">Sprained Ankle </label></label><label style="font-family: 'Roboto', sans-serif;">- Care Plan</h4>
 <div class="outbox">
+<p id="demo"></p>
+<div id="xray" style="display: none;">
 <table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
 <tr>
 	<td>
@@ -81,7 +126,73 @@ function sendObject(){
    <tr><td>Schedule Appointment&emsp;</td><td><input type="datetime-local" id="time" required bgcolor="#d9d9d9" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
    </table>
    <br>
-<input type="button" value="Confirm Appointment" id="switch1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#0086b3;border-radius: 8px;">
+   </div>
+<div id="ortho" style="display: none;">
+<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+<tr>
+	<td>
+	Choose Physician Name&emsp;
+	</td><td><input type="text" id="phyName" required bgcolor="#d9d9d9" placeholder="Enter Physician Name" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+<tr><td>Choose Location&emsp;</td><td><input type="text" id="loc" required bgcolor="#d9d9d9" placeholder="Enter Location" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+   <tr><td>Schedule Appointment&emsp;</td><td><input type="datetime-local" id="time" required bgcolor="#d9d9d9" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+   </table>
+   <br>
+   </div>
+<div id="med" style="display: none;">
+<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+<tr><td>
+	Set Medication Reminder&emsp;</td><td>
+		<select style="width:185px;"  id="medicationAlert">
+            <option value=" "> Set Reminder </option>
+            <option value="1"> Every 1 hour </option>
+            <option value="3"> Every 3 hours </option>
+            <option value="6"> Every 6 hours </option>
+            <option value="12"> Every 12 hours </option>
+        </select>
+	</td></tr>
+   </table>
+   <br>
+   </div>
+   <div id="walk" style="display: none;">
+	<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+	<tr>
+	 <td>
+        Set Walk Alert&emsp;</td>
+     <td>
+        <select style="width:135px;"  id="walkNotification">
+            <option value=" ">Set Reminder</option>
+            <option value="Yes"> Yes </option>
+            <option value="No"> No </option>
+        </select>
+     </td></tr>
+	</table>
+	<br>
+   </div>
+  <div id="ice" style="display: none;">
+<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+	<tr>
+	 <td>
+        Did you apply Cold/Ice pack?&emsp;</td>
+     <td>
+        <select style="width:135px;"  id="iceNotification">
+            <option value=" ">Yes/No</option>
+            <option value="Yes"> Yes </option>
+            <option value="No"> No </option>
+        </select>
+     </td></tr>
+	</table>
+	<br>
+</div>  
+<div id="mob" style="display: none;">
+<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
+	<tr>
+	<td>
+	Enter Mobility&emsp;
+	</td><td><input type="number" id="mobility" required bgcolor="#d9d9d9" placeholder="0-10" style="width: 200px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
+ </table>
+ <br>
+</div>
+<input type="button" value="Submit" id="switch1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#0086b3;border-radius: 8px;">
 </div>
 </center>
 </body>
