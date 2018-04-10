@@ -23,12 +23,13 @@ var temp,tmp;
 var searchParams = new URLSearchParams(window.location.search)
 var ntfid,event;
 if(searchParams.has('ntfId')){
-	ntdif = searchParams.get('ntfId');
+	ntfid = searchParams.get('ntfId');
 }
 if(searchParams.has('task')){
 	param = searchParams.get('task');
 	tmp = {
 		activity: {
+			eventId : ntfid,
 			headline : param
 		}
 	}
