@@ -7,12 +7,18 @@
 <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://akhilakandi93.github.io/Appointment/style.css">
+<link rel="stylesheet" href="C:\Users\I324715\Desktop\style.css">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.8.23/themes/redmond/jquery-ui.css">
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-	$('#switch1').click(function() {
+<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $("#switch1").click(function(){
 				  var msg= "";
 				  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
 				  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
@@ -23,13 +29,11 @@
 					  sendObject();
                   }
 });
-		
-$(function() {
-
+				  
 function sendObject(){
 	
 	$.ajax({
-		type : 'GET',
+		type : 'POST',
 		url : loginURL,
 		contentType : 'application/json',
 		data : JSON.stringify(tmp),
@@ -37,12 +41,13 @@ function sendObject(){
 			
 		},
 		error : function(err) {
-			alert("Please enter Valid credentials.")
 			console.log("Error: "+err)
 		}
 	})
 }
 });
+
+
 </script>
 <body>
 <br>
