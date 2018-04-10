@@ -19,15 +19,15 @@
 
 $(document).ready(function(){
   $("#switch1").click(function(){
-				  var msg= "";
-				  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
-				  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
-				  if($('#time').val() == "") msg= msg+"Please choose date and time for your appointment.\n";
-				  if(msg != ""){
-					alert(msg)
-				  }else{
-					  sendObject();
-                  }
+	  var msg= "";
+	  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
+	  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
+	  if($('#time').val() == "") msg= msg+"Please choose date and time for your appointment.\n";
+	  if(msg != ""){
+		  alert(msg)
+	   }else{
+		  sendObject();
+           }
 });
 				  
 function sendObject(){
