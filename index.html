@@ -65,7 +65,10 @@ var activity;
 	}else if(param == 'MedicationReminder') {
 		if($('#medicationAlert').val() == " ") alert("Please select how frequently you want to be reminded.");
 		else {
-			tmp.actvity['scheduledTime'] = $('#medicationAlert').val();
+			var temp = {
+				scheduledTime : $('#medicationAlert').val()
+			}
+			$.extend(tmp,temp);
 			alert("User response: "+$('#medicationAlert').val()+".Submitted successfully.");
 			sendObject();
 		}
