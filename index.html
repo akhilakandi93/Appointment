@@ -42,7 +42,6 @@ var activity;
   $("#switch1").click(function(){
 	var msg= "";
 	if(param == 'XrayAppointment' || param == 'OrthoSpecialistAppointment'){
-	  
 	  if($('#phyName').val() == "")msg = msg+"Please enter Physician name.\n";
 	  if($('#loc').val() == "")msg = msg+ "Please enter location for your appointment\n";
 	  if($('#time').val() == "") msg= msg+"Please choose date and time for your appointment.\n";
@@ -118,17 +117,6 @@ function sendObject(){
 <div class="outbox">
 <p id="demo"></p>
 <div id="xray" style="display: none;">
-<table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
-<tr>
-	<td>
-	Choose Physician Name&emsp;
-	</td><td><input type="text" id="phyName" required bgcolor="#d9d9d9" placeholder="Enter Physician Name" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
-<tr><td>Choose Location&emsp;</td><td><input type="text" id="loc" required bgcolor="#d9d9d9" placeholder="Enter Location" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
-   <tr><td>Schedule Appointment&emsp;</td><td><input type="datetime-local" id="time" required bgcolor="#d9d9d9" style="width: 270px;padding: 8px 20px;margin: 4px 0;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;"></td></tr>
-   </table>
-   <br>
-   </div>
-<div id="ortho" style="display: none;">
 <table cellspacing="10" bgcolor="#e6e6e6" style="border-radius: 10px;"align="center">
 <tr>
 	<td>
