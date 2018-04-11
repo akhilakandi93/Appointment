@@ -32,9 +32,8 @@ if(searchParams.has('task')){
 		}
 	}
 }
-if(param == 'XrayAppointment') document.getElementById('xray').style.display = "block";
+if(param == 'XrayAppointment' || param == 'OrthoSpecialistAppointment') document.getElementById('xray').style.display = "block";
 if(param == 'AppliedIce') document.getElementById('ice').style.display = "block";
-if(param == 'OrthoSpecialistAppointment') document.getElementById('ortho').style.display = "block";
 if(param == 'MedicationReminder') document.getElementById('med').style.display = "block";
 if(param == 'WalkNotification') document.getElementById('walk').style.display = "block";
 if(param == 'EvaluateMobility') document.getElementById('mob').style.display = "block";
