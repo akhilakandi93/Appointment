@@ -65,8 +65,8 @@ var activity;
 	}else if(param == 'MedicationReminder') {
 		if($('#medicationAlert').val() == " ") alert("Please select how frequently you want to be reminded.");
 		else {
-			tmp.actvity['scheduledTime'] = "6";
-			alert("User response: "+".Submitted successfully.");
+			tmp.actvity['scheduledTime'] = $('#medicationAlert').val();
+			alert("User response: "+$('#medicationAlert').val()+".Submitted successfully.");
 			sendObject();
 		}
 	}else if(param == 'WalkNotification'){
